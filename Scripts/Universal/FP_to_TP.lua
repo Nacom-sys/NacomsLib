@@ -41,4 +41,3 @@ task.spawn(function()
 		hum.AutoRotate = true
 	end)
 end)
-task.s
