@@ -241,81 +241,68 @@ executionRegistry["Violence District"] = function(targetTab)
    })
 end
 
--- Fallback initialization for default variables
-hitboxSize = hitboxSize or 10
-hitboxTransparency = hitboxTransparency or 0.7
-hitboxEnabledKiller = hitboxEnabledKiller or false
-hitboxEnabledAll = hitboxEnabledAll or false
+-- ==================== HITBOX VARIABLES ====================
+local hitboxSize = 10
+local hitboxTransparency = 0.7
+local hitboxEnabledKiller = false
+local hitboxEnabledAll = false
+local trackedHitboxPlayers = {}
 
--- Visual Box / Section Header
-PremadeTab:CreateSection("Hitbox Expansion Settings")
+-- Safely cleans up visual boxes attached to character parts
+local function removeHitboxVisuals(hrp)
+    if hrp:FindFirstChild("HitboxVisualBox") then
+        hrp.HitboxVisualBox:Destroy()
+    end
+end
 
-local HitboxKillerToggle = PremadeTab:CreateToggle({
-    Name = "Hitbox (Killer Only)",
-    CurrentValue = false,
-    Flag = "HitboxToggleKiller",
-    Callback = function(v)
-        hitboxEnabledKiller = v
-        if not v then
-            -- Reset character hitboxes when disabled
-            for _, p in ipairs(trackedHitboxPlayers or {}) do
-                if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
-                    local hrp = p.Character.HumanoidRootPart
-                    hrp.Size = Vector3.new(2, 2, 1)
-                    hrp.Transparency = 0
-                    hrp.CanCollide = true
+-- Reset a character's root part to default physics/appearance
+local function resetPlayerHitbox(hrp)
+    removeHitboxVisuals(hrp)
+    hrp.Size = Vector3.new(2, 2, 1)
+    hrp.Transparency = 1
+    hrp.CanCollide = true
+end
+
+-- Continuous processing loop with Visual Box Cham
+RunService.RenderStepped:Connect(function()
+    local isHitboxActive = hitboxEnabledKiller or hitboxEnabledAll
+    
+    if isHitboxActive then
+        for _, p in ipairs(trackedHitboxPlayers) do
+            if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = p.Character.HumanoidRootPart
+                
+                -- 1. Resize Root Part
+                hrp.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize)
+                hrp.Transparency = 1 -- Keep root part invisible so physics handle cleanly
+                hrp.CanCollide = false
+                
+                -- 2. Create or Update Visual Cham/Box
+                local visualBox = hrp:FindFirstChild("HitboxVisualBox")
+                if not visualBox then
+                    visualBox = Instance.new("SelectionBox")
+                    visualBox.Name = "HitboxVisualBox"
+                    visualBox.Adornee = hrp
+                    visualBox.AlwaysOnTop = true -- Renders through walls/models like a cham
+                    visualBox.Color3 = Color3.fromRGB(0, 162, 255) -- Bright Cyan/Blue
+                    visualBox.Parent = hrp
                 end
+                
+                -- 3. Update Visual Box Properties
+                visualBox.LineThickness = 0.05
+                visualBox.SurfaceTransparency = hitboxTransparency
+                visualBox.SurfaceColor3 = Color3.fromRGB(0, 162, 255)
             end
         end
-    end,
-})
-
-local HitboxAllToggle = PremadeTab:CreateToggle({
-    Name = "Hitbox (All Players)",
-    CurrentValue = false,
-    Flag = "HitboxToggleAll",
-    Callback = function(v)
-        hitboxEnabledAll = v
-        if not v then
-            -- Reset character hitboxes when disabled
-            for _, p in ipairs(trackedHitboxPlayers or {}) do
-                if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
-                    local hrp = p.Character.HumanoidRootPart
-                    hrp.Size = Vector3.new(2, 2, 1)
-                    hrp.Transparency = 0
-                    hrp.CanCollide = true
-                end
+    else
+        -- Clean up visuals instantly if disabled
+        for _, p in ipairs(trackedHitboxPlayers) do
+            if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                resetPlayerHitbox(p.Character.HumanoidRootPart)
             end
         end
-    end,
-})
-
-local HitboxSizeSlider = PremadeTab:CreateSlider({
-    Name = "Hitbox Size",
-    Range = {4, 30},
-    Increment = 1,
-    Suffix = " studs",
-    CurrentValue = 10,
-    Flag = "HitboxSize",
-    Callback = function(v)
-        hitboxSize = v
-    end,
-})
-
-local HitboxTransSlider = PremadeTab:CreateSlider({
-    Name = "Hitbox Transparency",
-    Range = {0, 1},
-    Increment = 0.05,
-    Suffix = "",
-    CurrentValue = 0.7,
-    Flag = "HitboxTransparency",
-    Callback = function(v)
-        hitboxTransparency = v
-    end,
-})
-
--- Keep search functionality linked
-registerGroupedElement("Premade", "Hitbox Expansion Settings", {HitboxKillerToggle, HitboxAllToggle, HitboxSizeSlider, HitboxTransSlider})
+    end
+end)
 local Div2 = PremadeTab:CreateDivider(); table.insert(premadeDividers, Div2)
 
 -- FEATURE 2: Airsoft Battles
