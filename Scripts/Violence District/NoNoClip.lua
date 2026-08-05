@@ -1013,13 +1013,13 @@ do
             if gp then
                 return
             end
-            if input.KeyCode == Enum.KeyCode.LeftShift then
+            if input.KeyCode == Enum.KeyCode.f then
                 sprinting = true;
                 update()
             end
         end)
         C:connect(UserInputService.InputEnded, function(input)
-            if input.KeyCode == Enum.KeyCode.LeftShift then
+            if input.KeyCode == Enum.KeyCode.f then
                 sprinting = false;
                 update()
             end
