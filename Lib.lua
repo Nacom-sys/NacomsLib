@@ -241,10 +241,10 @@ executionRegistry["Violence District"] = function(targetTab)
    })
 end
 
-TabHitbox:CreateToggle({Name="Hitbox (Killer Only)", CurrentValue=false, Flag="HitboxToggleKiller", Callback=function(v) hitboxEnabledKiller=v end})
-TabHitbox:CreateToggle({Name="Hitbox (All Players)", CurrentValue=false, Flag="HitboxToggleAll", Callback=function(v) hitboxEnabledAll=v end})
-TabHitbox:CreateSlider({Name="Hitbox Size", Range={4,30}, Increment=1, Suffix=" studs", CurrentValue=headSize, Flag="HitboxSize", Callback=function(v) headSize=v end})
-TabHitbox:CreateSlider({Name="Hitbox Transparency", Range={0,1}, Increment=0.05, Suffix="", CurrentValue=hitboxTransparency, Flag="HitboxTransparency", Callback=function(v) hitboxTransparency=v end})
+PremadeTab:CreateToggle({Name="Hitbox (Killer Only)", CurrentValue=false, Flag="HitboxToggleKiller", Callback=function(v) hitboxEnabledKiller=v end})
+PremadeTab:CreateToggle({Name="Hitbox (All Players)", CurrentValue=false, Flag="HitboxToggleAll", Callback=function(v) hitboxEnabledAll=v end})
+PremadeTab:CreateSlider({Name="Hitbox Size", Range={4,30}, Increment=1, Suffix=" studs", CurrentValue=headSize, Flag="HitboxSize", Callback=function(v) headSize=v end})
+PremadeTab:CreateSlider({Name="Hitbox Transparency", Range={0,1}, Increment=0.05, Suffix="", CurrentValue=hitboxTransparency, Flag="HitboxTransparency", Callback=function(v) hitboxTransparency=v end})
 
 local Div2 = PremadeTab:CreateDivider(); table.insert(premadeDividers, Div2)
 
