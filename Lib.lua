@@ -230,7 +230,7 @@ executionRegistry["Violence District"] = function(targetTab)
       Callback = function()
          if internalSelection == "Full" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/Full.lua"))()
-         elseif internalSelection == "No Noclip" then
+         elseif internalSelection == "No Noclip (F)" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/NoNoClip.lua"))()
          elseif internalSelection == "Skillcheck" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/SkillCheck.lua"))()
