@@ -220,7 +220,7 @@ executionRegistry["Violence District"] = function(targetTab)
    local internalSelection = "Full"
    targetTab:CreateDropdown({
       Name = "Violence District",
-      Options = {"Full", "No Noclip", "Skillcheck", "GenTP"},
+      Options = {"Full", "No Noclip (F)", "Skillcheck", "GenTP"},
       CurrentOption = {"Full"},
       MultipleOptions = false,
       Callback = function(Options) internalSelection = Options[1] end,
