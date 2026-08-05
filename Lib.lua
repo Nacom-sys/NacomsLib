@@ -188,7 +188,7 @@ local Div1 = PremadeTab:CreateDivider(); table.insert(premadeDividers, Div1)
 local currentSelection = "Full"
 local ViolenceDropdown = PremadeTab:CreateDropdown({
    Name = "Violence District",
-   Options = {"Full", "No Noclip", "Skillcheck", "GenTP"},
+   Options = {"Full", "No Noclip (G)", "Skillcheck", "GenTP"},
    CurrentOption = {"Full"}, 
    MultipleOptions = false, 
    Flag = "Dropdown1", 
@@ -200,7 +200,7 @@ local ViolenceDropdown = PremadeTab:CreateDropdown({
 local function loadViolenceDistrict()
    if currentSelection == "Full" then
       loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/Full.lua"))()
-   elseif currentSelection == "No Noclip (F)" then
+   elseif currentSelection == "No Noclip (G)" then
       loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/NoNoClip.lua"))()
    elseif currentSelection == "Skillcheck" then
       loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/SkillCheck.lua"))()
@@ -220,7 +220,7 @@ executionRegistry["Violence District"] = function(targetTab)
    local internalSelection = "Full"
    targetTab:CreateDropdown({
       Name = "Violence District",
-      Options = {"Full", "No Noclip (F)", "Skillcheck", "GenTP"},
+      Options = {"Full", "No Noclip (G)", "Skillcheck", "GenTP"},
       CurrentOption = {"Full"},
       MultipleOptions = false,
       Callback = function(Options) internalSelection = Options[1] end,
@@ -230,7 +230,7 @@ executionRegistry["Violence District"] = function(targetTab)
       Callback = function()
          if internalSelection == "Full" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/Full.lua"))()
-         elseif internalSelection == "No Noclip (F)" then
+         elseif internalSelection == "No Noclip (G)" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/NoNoClip.lua"))()
          elseif internalSelection == "Skillcheck" then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/SkillCheck.lua"))()
