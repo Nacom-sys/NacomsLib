@@ -241,56 +241,81 @@ executionRegistry["Violence District"] = function(targetTab)
    })
 end
 
--- Define default hitbox settings before initializing UI elements
-local hitboxSize = 10
-local hitboxTransparency = 0.7
-local hitboxEnabledKiller = false
-local hitboxEnabledAll = false
+-- Fallback initialization for default variables
+hitboxSize = hitboxSize or 10
+hitboxTransparency = hitboxTransparency or 0.7
+hitboxEnabledKiller = hitboxEnabledKiller or false
+hitboxEnabledAll = hitboxEnabledAll or false
+
+-- Visual Box / Section Header
+PremadeTab:CreateSection("Hitbox Expansion Settings")
 
 local HitboxKillerToggle = PremadeTab:CreateToggle({
-    Name = "Hitbox (Killer Only)", 
-    CurrentValue = hitboxEnabledKiller, 
-    Flag = "HitboxToggleKiller", 
-    Callback = function(v) 
-        hitboxEnabledKiller = v 
-    end
+    Name = "Hitbox (Killer Only)",
+    CurrentValue = false,
+    Flag = "HitboxToggleKiller",
+    Callback = function(v)
+        hitboxEnabledKiller = v
+        if not v then
+            -- Reset character hitboxes when disabled
+            for _, p in ipairs(trackedHitboxPlayers or {}) do
+                if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                    local hrp = p.Character.HumanoidRootPart
+                    hrp.Size = Vector3.new(2, 2, 1)
+                    hrp.Transparency = 0
+                    hrp.CanCollide = true
+                end
+            end
+        end
+    end,
 })
 
 local HitboxAllToggle = PremadeTab:CreateToggle({
-    Name = "Hitbox (All Players)", 
-    CurrentValue = hitboxEnabledAll, 
-    Flag = "HitboxToggleAll", 
-    Callback = function(v) 
-        hitboxEnabledAll = v 
-    end
+    Name = "Hitbox (All Players)",
+    CurrentValue = false,
+    Flag = "HitboxToggleAll",
+    Callback = function(v)
+        hitboxEnabledAll = v
+        if not v then
+            -- Reset character hitboxes when disabled
+            for _, p in ipairs(trackedHitboxPlayers or {}) do
+                if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                    local hrp = p.Character.HumanoidRootPart
+                    hrp.Size = Vector3.new(2, 2, 1)
+                    hrp.Transparency = 0
+                    hrp.CanCollide = true
+                end
+            end
+        end
+    end,
 })
 
 local HitboxSizeSlider = PremadeTab:CreateSlider({
-    Name = "Hitbox Size", 
-    Range = {4, 30}, 
-    Increment = 1, 
-    Suffix = " studs", 
-    CurrentValue = hitboxSize, 
-    Flag = "HitboxSize", 
-    Callback = function(v) 
-        hitboxSize = v 
-    end
+    Name = "Hitbox Size",
+    Range = {4, 30},
+    Increment = 1,
+    Suffix = " studs",
+    CurrentValue = 10,
+    Flag = "HitboxSize",
+    Callback = function(v)
+        hitboxSize = v
+    end,
 })
 
 local HitboxTransSlider = PremadeTab:CreateSlider({
-    Name = "Hitbox Transparency", 
-    Range = {0, 1}, 
-    Increment = 0.05, 
-    Suffix = "", 
-    CurrentValue = hitboxTransparency, 
-    Flag = "HitboxTransparency", 
-    Callback = function(v) 
-        hitboxTransparency = v 
-    end
+    Name = "Hitbox Transparency",
+    Range = {0, 1},
+    Increment = 0.05,
+    Suffix = "",
+    CurrentValue = 0.7,
+    Flag = "HitboxTransparency",
+    Callback = function(v)
+        hitboxTransparency = v
+    end,
 })
 
--- Register with your search system so filtering works
-registerGroupedElement("Premade", "Hitbox Expansion", {HitboxKillerToggle, HitboxAllToggle, HitboxSizeSlider, HitboxTransSlider})
+-- Keep search functionality linked
+registerGroupedElement("Premade", "Hitbox Expansion Settings", {HitboxKillerToggle, HitboxAllToggle, HitboxSizeSlider, HitboxTransSlider})
 local Div2 = PremadeTab:CreateDivider(); table.insert(premadeDividers, Div2)
 
 -- FEATURE 2: Airsoft Battles
