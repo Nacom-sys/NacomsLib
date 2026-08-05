@@ -200,7 +200,7 @@ local ViolenceDropdown = PremadeTab:CreateDropdown({
 local function loadViolenceDistrict()
    if currentSelection == "Full" then
       loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/Full.lua"))()
-   elseif currentSelection == "No Noclip" then
+   elseif currentSelection == "No Noclip (F)" then
       loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/NoNoClip.lua"))()
    elseif currentSelection == "Skillcheck" then
       loadstring(game:HttpGet("https://raw.githubusercontent.com/Nacom-sys/NacomsLib/refs/heads/main/Scripts/Violence%20District/SkillCheck.lua"))()
