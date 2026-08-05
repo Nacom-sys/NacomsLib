@@ -1013,13 +1013,13 @@ do
             if gp then
                 return
             end
-            if input.KeyCode == Enum.KeyCode.g then
+            if input.KeyCode == Enum.KeyCode.G then
                 sprinting = true;
                 update()
             end
         end)
         C:connect(UserInputService.InputEnded, function(input)
-            if input.KeyCode == Enum.KeyCode.g then
+            if input.KeyCode == Enum.KeyCode.G then
                 sprinting = false;
                 update()
             end
@@ -1278,7 +1278,7 @@ local function make_ui()
 
     make_divider("MOVEMENT")
     local swSprint = make_switch("Sprint Speed")
-    local sprintSlider = make_slider("Sprint Speed", 1.0, 2.0, 1.05)
+    local sprintSlider = make_slider("Sprint Speed", 1.0, 10.0, 1.30)
 
     make_divider("SETTINGS")
 
